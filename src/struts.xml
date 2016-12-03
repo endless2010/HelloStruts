@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.custom.i18n.resources" value="base" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.reload" value="true" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+					
+	<package name="mypackage"  extends="struts-default" namespace="/mypackage">
+		<global-results>
+			<result name="success">/jsp/helloworld.jsp</result>
+			<result name="other">/jsp/helloworld.jsp</result>
+			<result name="exception2">/jsp/exception.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="exception2" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+		<action name="login" class="com.mycompany.login.actions.LoginAction">
+			<result name="success">/jsp/formSuccess.jsp</result>
+			<result name="failure">/jsp/formFailure.jsp</result>
+			<result name="plainText" type="plainText">
+				<param name="location">/jsp/formSuccess.jsp</param>
+			</result>
+			<result name="redirect" type="redirect">
+				<param name="location">/jsp/formSuccess.jsp</param>
+			</result>
+			<result name="redirectAction" type="redirectAction">
+				<param name="actionName">regist</param>
+				<param name="namespace">/mypackage</param>
+			</result>
+			<result name="exception1">/jsp/exception.jsp</result>
+			<exception-mapping result="exception1" exception="java.lang.IllegalArgumentException"></exception-mapping>
+		</action>
+		<action name="regist" class="com.mycompany.login.actions.RegistAction">
+			<result name="success">/jsp/registActionTest.jsp</result>
+		</action>
+		<action name="i18n" class="com.mycompany.i18n.actions.I18nTestAction">
+			<!--<result name="success">/jsp/i18nTest.jsp</result>  -->
+			<result name="success">/jsp/i18n.jsp</result>
+		</action>
+	  	<action name="typeTest" class="com.mycompany.type.actions.TypeTestAction">
+		</action>
+	  	<action name="typeConvertTest" class="com.mycompany.type.actions.TypeConvertTestAction">
+		</action>
+	  	<action name="userConverter" class="com.mycompany.type.actions.UserConverterAction">
+	  		<result name="success">/jsp/userConverterResult.jsp</result>
+	  		<result name="input">/jsp/userConverterError.jsp</result>
+		</action>
+		<action name="upload" class="com.mycompany.upload.actions.SimpleUploadAction">
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">image/png,image/gif,image/jpeg</param>
+				<param name="maximumSize">102400</param>
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"/>
+			<param name="savePath">/upload</param>
+			<result name="success">/jsp/uploadSuccess.jsp</result>
+			<result name="input">/jsp/upload.jsp</result>
+		</action>
+		<action name="uploadMultiple" class="com.mycompany.upload.actions.MultipleFileUploadAction">
+			<param name="savePath">/upload</param>
+			<result name="success">/jsp/uploadSuccess.jsp</result>
+			<result name="input">/jsp/upload.jsp</result>
+		</action>
+	</package>
+
+</struts>
